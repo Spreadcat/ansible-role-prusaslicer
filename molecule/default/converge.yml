@@ -1,0 +1,8 @@
+---
+- name: Default | Converge
+  hosts: all
+  tasks:
+
+    - name: "Converge | Include role spreadcat.prusaslicer"
+      ansible.builtin.include_role:
+        name: "spreadcat.prusaslicer"
