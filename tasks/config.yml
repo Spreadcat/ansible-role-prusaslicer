@@ -72,3 +72,15 @@
       loop: "{{ prusaslicer_filament_config }}"
       loop_control:
         loop_var: __filament_file_setting
+
+# Deploy a useraccount file when a valid path has been provided
+- name: Config | Deploy UserAccount
+  when: prusaslicer_useraccount_content | length > 0
+  ansible.builtin.copy:
+    dest: "{{ prusaslicer_path_config_directory }}/UserAccount.dat"
+    content: "{{ prusaslicer_useraccount_content }}"
+    owner: "{{ prusaslicer_username }}"
+    group: "{{ prusaslicer_username }}"
+    mode: '0600'
+    backup: true
+    force: true

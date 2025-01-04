@@ -95,3 +95,12 @@ prusaslicer_config: {}
 # Example:
 #   prusaslicer_shell_command: prusaslicer
 prusaslicer_shell_command: PrusaSlicer
+
+# Sets the content of the UserAccount.dat file that is used to login
+# to the Prusa account.
+# The content should be fetched from a secure location and provided to this variable.
+#
+# Example:
+#   prusaslicer_useraccount_content: "{{ lookup('passwordstore', 'prusaslicer_account') }}"
+#   prusaslicer_useraccount_content: "dhaushshudhouwehhdasoizjoisFHashfhushfuso"
+prusaslicer_useraccount_content: ""
