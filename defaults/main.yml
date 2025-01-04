@@ -42,7 +42,7 @@ prusaslicer_userhome: "{{ lookup('env', 'HOME') }}"
 #         bed_temperature: 50
 #         cooling: true
 #
-prusaslicer_filament_config: {}
+prusaslicer_filament_config: []
 
 # List of files for filaments to replace into the configuration
 # directory.
