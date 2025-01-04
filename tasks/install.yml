@@ -29,7 +29,7 @@
 - name: Install | Install CLI command script
   become: true
   ansible.builtin.copy:
-    dest: "/usr/bin/{{ prusaslicer_shell_command }}"
+    dest: "/usr/local/bin/{{ prusaslicer_shell_command }}"
     content: |
       #!/usr/bin/env bash
       flatpak run com.prusa3d.PrusaSlicer
@@ -44,7 +44,7 @@
     path: "{{ ps_dirs }}"
     owner: "{{ prusaslicer_username }}"
     group: "{{ prusaslicer_usergroup }}"
-    mode: '0755'
+    mode: "0755"
     recurse: true
   loop_control:
     loop_var: ps_dirs
