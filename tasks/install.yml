@@ -27,6 +27,7 @@
   become: true
 
 - name: Install | Install CLI command script
+  become: true
   ansible.builtin.copy:
     dest: "/usr/bin/{{ prusaslicer_shell_command }}"
     content: |
