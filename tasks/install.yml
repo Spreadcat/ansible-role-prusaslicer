@@ -32,6 +32,7 @@
     dest: "/usr/local/bin/{{ prusaslicer_shell_command }}"
     content: |
       #!/usr/bin/env bash
+      # Ansible managed from spreadcat.prusaslicer
       flatpak run com.prusa3d.PrusaSlicer
     owner: root
     group: root
