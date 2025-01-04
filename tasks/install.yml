@@ -35,7 +35,7 @@
       flatpak run com.prusa3d.PrusaSlicer
     owner: root
     group: root
-    mode: '0755̈́'
+    mode: "0755̈́"
     backup: true
 
 - name: Install | Create config directories
