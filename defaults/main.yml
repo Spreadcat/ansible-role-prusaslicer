@@ -1,4 +1,10 @@
 ---
+# Default package name for the PrusaSlicer within Flatpak
+#
+# Example:
+#   prusaslicer_flatpak_packagename: com.prusa3d.PrusaSlicer
+prusaslicer_flatpak_packagename: "com.prusa3d.PrusaSlicer"
+
 # defaults file for spreadcat.prusaslicer
 #
 # Directory for the prusaslicer configuration files
@@ -6,7 +12,7 @@
 # Example:
 #   prusaslicer_path_config_directory: "/home/jdoe/.config/PrusaSlicer"
 #
-prusaslicer_path_config_directory: "{{ prusaslicer_userhome }}/.config/PrusaSlicer"
+prusaslicer_path_config_directory: "{{ prusaslicer_userhome }}/.var/app/{{ prusaslicer_flatpak_packagename }}/config/PrusaSlicer"
 
 # Default user for which the prusaslicer will be configured.
 #
