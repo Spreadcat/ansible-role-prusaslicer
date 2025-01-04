@@ -23,7 +23,6 @@
 
 # Update settings only if the config file exists
 - name: Config | Manage PrusaSlicer.ini
-  when: __file_prusaslicer_ini['stat']['exists']
   ansible.builtin.ini_file:
     path: "{{ prusaslicer_path_config_directory }}/PrusaSlicer.ini"
     backup: true
