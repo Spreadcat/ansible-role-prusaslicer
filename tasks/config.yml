@@ -10,6 +10,7 @@
     path: "{{ prusaslicer_path_config_directory }}/PrusaSlicer.ini"
   register: __file_prusaslicer_ini
 
+# Update settings only if the config file exists
 - name: Config | Manage PrusaSlicer.ini
   when: __file_prusaslicer_ini['stat']['exists']
   ansible.builtin.ini_file:
@@ -28,6 +29,17 @@
   loop: "{{ prusaslicer_config | dict2items }}"
   loop_control:
     loop_var: _config_setting
+
+# If not PrusaSlicer.ini file exists, the application has not been started yet.
+# Deploy the default file with all the default settings if this has not been explicitly being disabled.
+- name: Config | Deploy default PrusaSlicer.ini file
+  when: not __file_prusaslicer_ini['stat']['exists']
+  ansible.builtin.template:
+    dest: "{{ prusaslicer_path_config_directory }}/PrusaSlicer.ini"
+    src: "PrusaSlicer.ini.j2"
+    owner: "{{ prusaslicer_username }}"
+    group: "{{ prusaslicer_username }}"
+    mode: '0644'
 
 # Replace the whole filament files with some from the sources.
 # Backups of existing files will be taken, though.
