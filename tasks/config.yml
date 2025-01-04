@@ -1,5 +1,63 @@
 ---
 # Configuration parts of the role.
-- name: Config | Debug output
-  ansible.builtin.debug:
-    msg: "Running config tasks."
+#
+# Manage the lines in the Prusaslicer.ini configuration file for the whole
+# Prusaslicer
+#
+# Check the status of the current file.
+- name: Config | Status PrusaSlicer.ini
+  ansible.builtin.stat:
+    path: "{{ prusaslicer_path_config_directory }}/PrusaSlicer.ini"
+  register: __file_prusaslicer_ini
+
+- name: Config | Manage PrusaSlicer.ini
+  when: __file_prusaslicer_ini['stat']['exists']
+  ansible.builtin.ini_file:
+    path: "{{ prusaslicer_path_config_directory }}/PrusaSlicer.ini"
+    backup: true
+    owner: "{{ prusaslicer_username }}"
+    group: "{{ prusaslicer_username }}"
+    mode: '0644'
+    option: "{{ _config_setting['key'] }}"
+    value: |-
+      {% if _config_setting['value'] is boolean -%}
+      {{   _config_setting['value'] | int }}
+      {%- else -%}
+      {{   _config_setting['value'] }}
+      {%- endif -%}
+  loop: "{{ prusaslicer_config | dict2items }}"
+  loop_control:
+    loop_var: _config_setting
+
+# Replace the whole filament files with some from the sources.
+# Backups of existing files will be taken, though.
+- name: Config | Manage complete filament files
+  when: "{{ prusaslicer_filament_files | length > 0 }}"
+  block:
+
+    - name: Config | Replace filament files
+      ansible.builtin.copy:
+        src: "{{ __filament_file }}"
+        dest: "{{ prusaslicer_path_config_directory }}/filament/{{ __filament_file | basename }}"
+        backup: true
+        force: true
+        owner: "{{ prusaslicer_username }}"
+        group: "{{ prusaslicer_username }}"
+        mode: '0640'
+      loop_control:
+        loop_var: __filament_file
+      loop: "{{ prusaslicer_filament_files }}"
+
+# Replace a setting in an existing filament file without touching the
+# rest of the file.
+- name: Config | Manage partial filament files
+  when:
+    - prusaslicer_filament_files | length == 0
+  block:
+
+    - name: Config | Manage single filament settings
+      ansible.builtin.include_tasks:
+        file: ./config/filament_setting.yml
+      loop: "{{ prusaslicer_filament_config }}"
+      loop_control:
+        loop_var: __filament_file_setting

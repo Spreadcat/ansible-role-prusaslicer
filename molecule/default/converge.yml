@@ -3,6 +3,10 @@
   hosts: all
   tasks:
 
+    - name: "Converge | Include variables"
+      ansible.builtin.include_vars:
+        file: variables.yml
+
     - name: "Converge | Include role spreadcat.prusaslicer"
       ansible.builtin.include_role:
         name: "spreadcat.prusaslicer"

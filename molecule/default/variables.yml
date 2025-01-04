@@ -1,0 +1,13 @@
+---
+prusaslicer_username: ansible
+prusaslicer_usergroup: ansible
+prusaslicer_userhome: "/home/ansible"
+
+prusaslicer_filament_config:
+  - name: "Clas Ohlson PETG Black @MK4S HF0.4"
+    config:
+      bed_temerature: 60
+      filament_type: PETG
+      cooling: true
+prusaslicer_config:
+  allow_ip_resolve: 1

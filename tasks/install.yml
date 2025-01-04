@@ -1,5 +1,41 @@
 ---
-# Installing parts of the role.
-- name: Install | Debug output
-  ansible.builtin.debug:
-    msg: "Running install tasks."
+- name: Install | Cache update on Ubuntu
+  ansible.builtin.apt:
+    update_cache: true
+    cache_valid_time: 7200
+  become: true
+  when: ansible_distribution | lower == 'ubuntu'
+
+- name: Install | Manage flatpak installation
+  ansible.builtin.package:
+    name:
+      - flatpak
+    state: "{{ prusaslicer_flatpak_package_state }}"
+  become: true
+
+- name: Install | Configure flatpak remote
+  ansible.builtin.flatpak_remote:
+    name: flathub
+    state: present
+    flatpakrepo_url: "{{ prusaslicer_flatpak_remote_url }}"
+  become: true
+
+- name: Install | Manage prusaslicer installation
+  community.general.flatpak:
+    name: com.prusa3d.PrusaSlicer
+    state: "{{ prusaslicer_package_state }}"
+  become: true
+
+- name: Install | Create config directories
+  ansible.builtin.file:
+    state: directory
+    path: "{{ ps_dirs }}"
+    owner: "{{ prusaslicer_username }}"
+    group: "{{ prusaslicer_usergroup }}"
+    mode: '0755'
+    recurse: true
+  loop_control:
+    loop_var: ps_dirs
+  loop:
+    - "{{ prusaslicer_path_config_directory }}"
+    - "{{ prusaslicer_path_config_directory }}/filament"

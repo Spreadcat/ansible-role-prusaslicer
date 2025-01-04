@@ -1,2 +1,84 @@
 ---
 # defaults file for spreadcat.prusaslicer
+#
+# Directory for the prusaslicer configuration files
+#
+# Example:
+#   prusaslicer_path_config_directory: "/home/jdoe/.config/PrusaSlicer"
+#
+prusaslicer_path_config_directory: "{{ prusaslicer_userhome }}/.config/PrusaSlicer"
+
+# Default user for which the prusaslicer will be configured.
+#
+# Example:
+#   prusaslicer_username: "jdoe"
+#
+prusaslicer_username: "{{ lookup('env', 'USER') }}"
+
+# Default group for which the prussaslicer will be configured.
+#
+# Example:
+#   prusaslicer_usergroup: "jdoe"
+#
+prusaslicer_usergroup: "{{ lookup('env', 'USER') }}"
+
+# Default home directory for the user that gets prusaslicer
+#
+# Example:
+#   prusaslicer_userhome: "/home/jdoe"
+prusaslicer_userhome: "{{ lookup('env', 'HOME') }}"
+
+# Configuration of extra filaments for the prusaslicer.
+#
+# * The YAML syntax will be translated to the valid ini file syntax.
+#   Boolean values (true|false) will be translated to their corresponding
+#   integer values.
+#
+# Example:
+#   # Will modify the file `Prusa Filament X.ini`
+#   prusaslicer_filament_config:
+#     - name: "Prusa Filament X"
+#       config:
+#         bed_temperature: 50
+#         cooling: true
+#
+prusaslicer_filament_config: {}
+
+# List of files for filaments to replace into the configuration
+# directory.
+#
+# Example:
+#   prusaslicer_filament_files:
+#     - ./files/filament01.ini
+#     - ./files/filament02.ini
+#     - ./files/filament03.ini
+prusaslicer_filament_files: []
+
+# Sets the default state of flatpak for the installation of
+# prusaslicer on the host.
+# Default is present to not alter existing installation of flatpak.
+#
+# Example:
+#   prusaslicer_package_flatpak_state: latest
+prusaslicer_flatpak_package_state: present
+
+# Sets the state of the flatpak image for the prusaslicer
+# By default the latest version is installed when running the role for the first time.
+# On already existing installations, no changes will be done, unless this parameter is changed.
+#
+# Example:
+#   prusaslicer_package_state: latest
+prusaslicer_package_state: present
+
+# Sets the flatpak remote url from where the flatpak for the prusaslicer will be installed.
+#
+# Example:
+#   prusaslicer_flatpak_remote_url: "https://example.com/repo/example.flatpakrepo"
+prusaslicer_flatpak_remote_url: "https://dl.flathub.org/repo/flathub.flatpakrepo"
+
+# Sets the configuration settings for the PrusaSlicer in its `PrusaSlicer.ini` file.
+#
+# Example:
+#   prusaslicer_config:
+#     allow_ip_resolve: 1
+prusaslicer_config: {}

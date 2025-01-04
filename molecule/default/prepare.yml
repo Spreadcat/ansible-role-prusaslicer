@@ -2,4 +2,16 @@
 - name: Default | Prepare
   hosts: all
   gather_facts: false
-  tasks: []
+  tasks:
+
+    - name: "Converge | Include variables"
+      ansible.builtin.include_vars:
+        file: variables.yml
+
+    - name: Prepare | Create config dir
+      ansible.builtin.file:
+        state: directory
+        dest: "{{ prusaslicer_userhome }}/.config"
+        owner: "{{ prusaslicer_username }}"
+        group: "{{ prusaslicer_usergroup }}"
+        mode: '0750'

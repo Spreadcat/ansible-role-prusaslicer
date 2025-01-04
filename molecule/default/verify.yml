@@ -2,4 +2,19 @@
 - name: Default | Verify
   hosts: all
   gather_facts: false
-  tasks: []
+  tasks:
+
+    - name: "Verify | Include variables"
+      ansible.builtin.include_vars:
+        file: variables.yml
+
+    - name: Verify | Verify configuration directories
+      ansible.builtin.file:
+        dest: "{{ ps_verify_dirs }}"
+      loop_control:
+        loop_var: ps_verify_dirs
+      loop:
+        - "{{ prusaslicer_path_config_directory }}"
+        - "{{ prusaslicer_path_config_directory }}/filament"
+      check_mode: true
+      failed_when: __config_dirs['changed']

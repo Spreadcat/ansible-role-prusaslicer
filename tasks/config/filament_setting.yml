@@ -1,0 +1,22 @@
+---
+# Include file to replace a single setting in a given filament file
+
+- name: Config/filament_setting | Assert variable has been set
+  ansible.builtin.assert:
+    that: __filament_file_setting is defined
+    quiet: true
+
+- name: Config/filament_setting | Replace a single setting in a file
+  ansible.builtin.ini_file:
+    path: "{{ prusaslicer_path_config_directory }}/filament/{{ __filament_file_setting['name'] }}.ini"
+    option: "{{ _filament_setting['key'] }}"
+    backup: true
+    value: |-
+      {% if _filament_setting['value'] is boolean -%}
+      {{   _filament_setting['value'] | int }}
+      {%- else -%}
+      {{   _filament_setting['value'] }}
+      {%- endif -%}
+  loop: "{{ __filament_file_setting['config'] | dict2items }}"
+  loop_control:
+    loop_var: _filament_setting
