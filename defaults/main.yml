@@ -82,3 +82,10 @@ prusaslicer_flatpak_remote_url: "https://dl.flathub.org/repo/flathub.flatpakrepo
 #   prusaslicer_config:
 #     allow_ip_resolve: 1
 prusaslicer_config: {}
+
+# Sets the name of the Shell command to start the PrusaSlicer from
+# flatpak
+#
+# Example:
+#   prusaslicer_shell_command: prusaslicer
+prusaslicer_shell_command: PrusaSlicer

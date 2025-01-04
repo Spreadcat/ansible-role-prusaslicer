@@ -26,6 +26,17 @@
     state: "{{ prusaslicer_package_state }}"
   become: true
 
+- name: Install | Install CLI command script
+  ansible.builtin.copy:
+    dest: "/usr/bin/{{ prusaslicer_shell_command }}"
+    content: |
+      #!/usr/bin/env bash
+      flatpak run com.prusa3d.PrusaSlicer
+    owner: root
+    group: root
+    mode: '0755̈́'
+  backup: true
+
 - name: Install | Create config directories
   ansible.builtin.file:
     state: directory
