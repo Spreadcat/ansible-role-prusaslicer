@@ -14,7 +14,7 @@
   become: true
 
 - name: Install | Configure flatpak remote
-  ansible.builtin.flatpak_remote:
+  community.general.flatpak_remote:
     name: flathub
     state: present
     flatpakrepo_url: "{{ prusaslicer_flatpak_remote_url }}"

@@ -7,9 +7,12 @@
     quiet: true
 
 - name: Config/filament_setting | Replace a single setting in a file
-  ansible.builtin.ini_file:
+  community.general.ini_file:
     path: "{{ prusaslicer_path_config_directory }}/filament/{{ __filament_file_setting['name'] }}.ini"
     option: "{{ _filament_setting['key'] }}"
+    owner: "{{ prusaslicer_username }}"
+    group: "{{ prusaslicer_username }}"
+    mode: '0755'
     backup: true
     value: |-
       {% if _filament_setting['value'] is boolean -%}
