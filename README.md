@@ -1,44 +1,54 @@
 # Role spreadcat.prusaslicer
 
-A brief description of the role goes here.
+A role to install the com.prusa3d.PrusaSlicer flatpack from Github from Prusa Research.
+
+The role supports
+
+- Deployment of additional Filament files
+- Automtic login into your Prusa account
+- Changing settings of the Prusa Slicer
 
 ## Requirements
 
-Any pre-requisites that may not be covered by Ansible itself or the role
-should be mentioned here. For instance, if the role uses the EC2 module,
-it may be a good idea to mention in this section that the boto package is
-required.
+- Access to the Internet in order download the flatpak package.
 
 ## Role Variables
 
-A description of the settable variables for this role should go here, including
-any variables that are in defaults/main.yml, vars/main.yml, and any variables
-that can/should be set via parameters to the role. Any variables that are read
-from other roles and/or the global scope (ie. hostvars, group vars, etc.)
-should be mentioned here as well.
+For a detailed description of all supported variables see `./defaults/main.yml`. The file contains all variables and
+usaeg examples for each of them.
 
 ## Other Variables
 
-A description of variables not usually modified goes here.
+The Role uses per default environment variables to determine the right execution parameters.
+
+Unless overwritten, the following environment variables are being used:
+
+- `USER`
+- `HOME`
+
+Details on where they are used can be found in `./defaults/main.yml`.
 
 ## Dependencies
 
-A list of other roles hosted on Galaxy should go here, plus any details in
-regards to parameters that may need to be set for other roles, or variables
-that are used from other roles.
+- None
 
 ## Example Playbook
 
-Including an example of how to use your role (for instance, with variables
-passed in as parameters) is always nice for users too:
+The following playbook will
+
+- Install the latest flatpak `com.prusa3d.PrusaSlicer` from github.com.
+- Set the mode in PrusaSlicer to `Export/Advanced`.
+- Change the shell command to start the slicer from `PrusaSlicer` (default) to `prusaslicer`).
 
 ```yaml
 - hosts: localhost
-  gather_facts: false
+  gather_facts: true
   connection: local
   roles:
     - role: spreadcat.prusaslicer
-      x: 42
+      prusaslicer_config:
+        view_mode: expert
+      prusaslicer_shell_command: prusaslicer
 ```
 
 ## License
@@ -46,8 +56,5 @@ passed in as parameters) is always nice for users too:
 MIT
 
 ## Author Information
-
-An optional section for the role authors to include contact information,
-or a website (HTML is not allowed).
 
 This role was created and is maintained by Daniel Buøy-Vehn.
