@@ -104,3 +104,17 @@ prusaslicer_shell_command: PrusaSlicer
 #   prusaslicer_useraccount_content: "{{ lookup('passwordstore', 'prusaslicer_account') }}"
 #   prusaslicer_useraccount_content: "dhaushshudhouwehhdasoizjoisFHashfhushfuso"
 prusaslicer_useraccount_content: ""
+
+# Configured flatpak to allow access to extra filesystems like NFS mounted shares.
+#
+# Example:
+#   prusaslicer_flatpak_allow_filesystem: "/mnt/nfs"
+prusaslicer_flatpak_allow_filesystem: ""
+
+# Limits the change to the flatpak overrides to the user context.
+# If set to "user", the flatpak overrides will only be executed in the user context.
+# If set to "system", the flatpak overrides will be exected systemwide for all users.
+#
+# Example:
+#   prusaslicer_flatpak_overrides_context: "system"
+prusaslicer_flatpak_override_context: "user"

@@ -5,6 +5,12 @@
 # Prusaslicer
 #
 # Check the status of the current file.
+
+- name: Config | Include flatpak configuration
+  when: prusaslicer_flatpak_allow_filesystem | length > 0
+  ansible.builtin.include_tasks:
+    file: config_flatpak.yml
+
 - name: Config | Status PrusaSlicer.ini
   ansible.builtin.stat:
     path: "{{ prusaslicer_path_config_directory }}/PrusaSlicer.ini"

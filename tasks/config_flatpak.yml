@@ -1,0 +1,30 @@
+---
+# Configure flatpak
+- name: Config_flatpak | Read current filesystem overrides for user
+  when: prusaslicer_flatpak_override_context | lower == "user"
+  become_user: "{{ prusaslicer_username }}"
+  ansible.builtin.command:
+    cmd: "flatpak override --user --show {{ prusaslicer_flatpak_packagename }}"
+  register: _flatpak_overrides
+
+- name: Config_flatpak | Read current filesystem overrides for system
+  when: prusaslicer_flatpak_override_context | lower == "system"
+  become_user: "{{ prusaslicer_username }}"
+  ansible.builtin.command:
+  ansible.builtin.command:
+    cmd: "flatpak override --show {{ prusaslicer_flatpak_packagename }}"
+  register: _flatpak_overrides
+
+- name: Config_flatpak | Set filesystem override for system
+  when: prusaslicer_flatpak_override_context | lower == "system"
+  become_user: "{{ prusaslicer_username }}"
+  ansible.builtin.command:
+    cmd: "flatpak override --filesystem={{ prusaslicer_flatpak_allow_filesystem }}"
+
+- name: Config_flatpak | Set filesystem override for user
+  when: prusaslicer_flatpak_override_context | lower == "user"
+  become_user: "{{ prusaslicer_username }}"
+  become: true
+  ansible.builtin.command:
+    cmd: "flatpak override --user --filesystem={{ prusaslicer_flatpak_allow_filesystem }}"
+  register: _output
