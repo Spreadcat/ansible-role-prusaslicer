@@ -45,9 +45,6 @@ verifier:
   name: ansible
 scenario:
   name: default
-  converge_sequence:
-    - prepare
-    - converge
   test_sequence:
     - destroy
     - syntax
